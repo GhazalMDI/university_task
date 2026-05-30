@@ -1,0 +1,205 @@
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .phone-wrapper {
+            width: 390px;
+            min-height: 780px;
+            background: #fff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: #f5c800;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            border-radius: 0 0 18px 18px;
+        }
+
+        .header .back-btn {
+            color: #fff;
+            font-size: 1.6rem;
+            cursor: pointer;
+            position: absolute;
+            left: 16px;
+        }
+
+        .header h1 {
+            flex: 1;
+            text-align: center;
+            color: #fff;
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-transform: capitalize;
+        }
+
+        /* Content */
+        .content {
+            padding: 24px 20px;
+            flex: 1;
+        }
+
+        /* Daily Allocation */
+        .section-label {
+            color: #a89a00;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .days-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 4px;
+        }
+
+        .day-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            flex: 1;
+        }
+
+        .day-item .day-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #222;
+        }
+
+        .day-item .day-value {
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+
+        /* Divider */
+        .divider {
+            border: none;
+            border-top: 1px solid #e8e8e8;
+            margin: 16px 0;
+        }
+
+        /* Screen time runs out row */
+        .option-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+        }
+
+        .option-row .option-label {
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .option-row .option-value {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Screen Time Today */
+        .screen-time-today {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .screen-time-today .today-label {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .time-stats {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .time-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .time-block .stat-label {
+            font-size: 0.8rem;
+            color: #aaa;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .time-block .stat-value {
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: #f5c800;
+            letter-spacing: -1px;
+        }
+
+        /* Adjust available */
+        .adjust-label {
+            text-align: center;
+            font-size: 0.82rem;
+            color: #bbb;
+            margin-top: 20px;
+            margin-bottom: 36px;
+        }
+
+        /* Buttons */
+        .adjust-buttons {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .circle-btn {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            border: 2px solid #bbb;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.6rem;
+            color: #555;
+        }
+
+        .circle-btn:hover {
+            border-color: #f5c800;
+            color: #f5c800;
+            transform: scale(1.05);
+        }
+
+        .circle-btn:active {
+            transform: scale(0.96);
+        }
