@@ -1,0 +1,63 @@
+{% extends '_base.html' %}
+
+{% load static %}
+{% block title %}Register {% endblock %}
+
+{% block css %}
+      <link rel="stylesheet" href="{% static 'account/login/style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+      <div class="login-container">
+        <div class="login-image-section">
+            <!-- می‌توانید یک تصویر یا گرافیک جذاب مرتبط با Negin Bin اینجا قرار دهید -->
+            <img src="negin.png" alt="Negin Bin Graphic">
+            <div class="image-overlay"></div>
+            <div class="app-info">
+                <h1>نگین بین</h1>
+                <p>دنیای هوشمند در دستان شما</p>
+            </div>
+        </div>
+        <div class="login-form-section">
+            <div class="form-content">
+
+                <h2>welcome to neginbin</h2>
+                <p class="subtitle">please enter information for loign</p>
+
+                <form id="login-form" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" id="username_email" name="username_email" placeholder="نام کاربری/ایمیل" required>
+                        <label for="username_email">Email/Password</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" placeholder="رمز عبور" required>
+                        <label for="password">Password</label>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Remember me.</label>
+                        </div>
+                        <a href="#" class="forgot-password">are you forget paswword? </a>
+                    </div>
+
+                    <button href="" type="submit" class="login-button">Login</button>
+                </form>
+
+                <div class="signup-link">
+                    do you not have an account?<a href="{% url 'Account:Register' %}">create an account</a>
+                </div>
+            </div>
+             <footer class="login-footer">
+                <p>&copy; 2026 نگین بین. تمامی حقوق محفوظ است.</p>
+            </footer>
+        </div>
+    </div>
+    </div>
+
+
+
+{% endblock %}

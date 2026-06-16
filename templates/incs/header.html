@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هدر نگین‌بین</title>
+    <style>
+        @font-face {
+            font-family: 'Vazir';
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Vazir', sans-serif;
+            direction: rtl;
+        }
+
+        /* ═══════════════════════════════
+           هدر
+        ═══════════════════════════════ */
+        .nb-header {
+            background-color: #8B4513;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nb-header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            height: 56px;
+        }
+
+        /* ── برند ── */
+        .nb-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .nb-brand-icon {
+            width: 34px;
+            height: 34px;
+            background: #FFC107;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .nb-brand-name {
+            color: #FFC107;
+            font-size: 17px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── دکمه همبرگر ── */
+        .nb-hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 6px;
+            background: none;
+            border: none;
+            outline: none;
+        }
+
+        .nb-hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: #FFC107;
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* حالت X وقتی منو باز است */
+        .nb-hamburger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .nb-hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .nb-hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ── ناوبری دسکتاپ ── */
+        .nb-nav {
+            display: none;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nb-nav a {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .nb-nav a:hover {
+            background: rgba(255, 193, 7, 0.15);
+            color: #FFC107;
+        }
+
+        .nb-nav a.active {
+            color: #FFC107;
+            font-weight: bold;
+        }
+
+        /* ── دکمه‌های ورود/ثبت‌نام دسکتاپ ── */
+        .nb-auth {
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nb-btn-login {
+            color: #FFC107;
+            font-size: 13px;
+            padding: 6px 16px;
+            border: 1.5px solid #FFC107;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            background: transparent;
+            font-family: 'Vazir', sans-serif;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .nb-btn-login:hover {
+            background: rgba(255, 193, 7, 0.1);
+        }
+
+        .nb-btn-register {
+            background: #FFC107;
+            color: #8B4513;
+            font-size: 13px;
+            padding: 7px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            font-family: 'Vazir', sans-serif;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .nb-btn-register:hover {
+            background: #e0a800;
+        }
+
+        /* ═══════════════════════════════
+           منوی موبایل (کشویی)
+        ═══════════════════════════════ */
+        .nb-mobile-menu {
+            background: #6b3410;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+
+        .nb-mobile-menu.open {
+            max-height: 400px;
+        }
+
+        .nb-mobile-menu a {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            padding: 13px 20px;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .nb-mobile-menu a:hover {
+            background: rgba(255, 193, 7, 0.1);
+            color: #FFC107;
+        }
+
+        .nb-mobile-menu a.active {
+            color: #FFC107;
+            font-weight: bold;
+        }
+
+        .nb-mobile-auth {
+            display: flex;
+            gap: 10px;
+            padding: 14px 20px 18px;
+        }
+
+        .nb-mobile-auth a {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            border: none;
+        }
+
+        .nb-mobile-auth .login {
+            border: 1.5px solid #FFC107;
+            color: #FFC107;
+            background: transparent;
+        }
+
+        .nb-mobile-auth .register {
+            background: #FFC107;
+            color: #8B4513;
+        }
+
+        /* ═══════════════════════════════
+           دسکتاپ — تبلت به بالا
+        ═══════════════════════════════ */
+        @media (min-width: 768px) {
+            .nb-header-inner {
+                padding: 0 32px;
+                height: 62px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .nb-hamburger {
+                display: none;
+            }
+
+            .nb-nav {
+                display: flex;
+            }
+
+            .nb-auth {
+                display: flex;
+            }
+
+            .nb-mobile-menu {
+                display: none !important;
+            }
+
+            .nb-brand-icon {
+                width: 38px;
+                height: 38px;
+            }
+
+            .nb-brand-name {
+                font-size: 19px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="nb-header">
+    <div class="nb-header-inner">
+
+        <!-- برند / لوگو -->
+        <a href="index.html" class="nb-brand">
+            <div class="nb-brand-icon">
+                <svg viewBox="0 0 40 40" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="20,4 25,16 38,16 28,24 32,36 20,28 8,36 12,24 2,16 15,16" fill="#8B4513"/>
+                </svg>
+            </div>
+            <span class="nb-brand-name">Neginbin</span>
+        </a>
+
+        <!-- ناوبری دسکتاپ -->
+        <nav class="nb-nav">
+            <a href="{% url 'Account:Login' %}" class="active">home</a>
+            <a href="about.html">about us</a>
+            <a href="contact.html">contact us</a>
+        </nav>
+
+        <!-- دکمه‌های دسکتاپ -->
+        <div class="nb-auth">
+             {% if request.user.is_authenticated %}
+              <a href="{% url 'Account:Logout' %}" class="nb-btn-logout"> Logout</a>
+            {% else %}
+                <a href="{% url 'Account:Login' %}" class="nb-btn-login">Login</a>
+                <a href="{% url 'Account:Register' %}" class="nb-btn-register">Register</a>
+          {% endif %}
+        </div>
+
+        <!-- دکمه همبرگر موبایل -->
+        <button class="nb-hamburger" id="menuBtn" aria-label="open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </div>
+
+    <!-- منوی کشویی موبایل -->
+    <nav class="nb-mobile-menu" id="mobileMenu">
+        <a href="{% url 'Home:home' %}" class="active">home</a>
+        <a href="">about us</a>
+        <a href="">contact us</a>
+        <div class="nb-mobile-auth">
+            {% if request.user.is_authenticated %}
+                 <a href="{% url 'Account:Logout' %}" class="logout"> Logout</a>
+            {% else %}
+                <a href="{% url 'Account:Login' %}" class="login">login</a>
+                <a href="{% url 'Account:Register' %}" class="register"> register</a>
+          {% endif %}
+        </div>
+    </nav>
+</header>
+
+<script>
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+
+    btn.addEventListener('click', function () {
+        btn.classList.toggle('open');
+        menu.classList.toggle('open');
+        btn.setAttribute('aria-label', menu.classList.contains('open') ? 'close menu' : 'open menu');
+    });
+
+    menu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+            btn.classList.remove('open');
+            menu.classList.remove('open');
+        });
+    });
+</script>
+
+</body>
+</html>

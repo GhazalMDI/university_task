@@ -1,0 +1,263 @@
+    @font-face {
+            font-family: 'Vazir';
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        :root {
+            --primary-gold: #FFC107;
+            --secondary-brown: #8B4513;
+            --background-light: #f8f9fa;
+            --text-dark: #212529;
+            --input-border: #ced4da;
+            --input-background: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazir', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            background-color: #fff;
+            min-height: 100vh;
+        }
+
+        /* ───── بخش تصویر بالا ───── */
+        .image-section {
+            background-color: var(--secondary-brown);
+            background-size: cover;
+            background-position: center;
+            min-height: 220px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .logo-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: float 3s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        .logo-wrapper .logo {
+            max-width: 180px;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes float {
+            0%   { transform: translate(-50%, -50%) translateY(0px); }
+            50%  { transform: translate(-50%, -50%) translateY(-10px); }
+            100% { transform: translate(-50%, -50%) translateY(0px); }
+        }
+      body{
+    margin:0;
+    font-family:'Vazir',sans-serif;
+    background:#f8f9fa;
+}
+.page-content{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height: calc(100vh - 56px);
+}
+        /* ───── بخش فرم ───── */
+        .form-section {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 30px 20px 40px;
+            width: 100%;
+        }
+
+        .form-content {
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .logo-form {
+            max-width: 90px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+
+        .form-content h2 {
+            margin-bottom: 8px;
+            color: var(--secondary-brown);
+            font-size: 1.8em;
+        }
+
+        .form-content p {
+            margin-bottom: 22px;
+            font-size: 0.9em;
+            color: var(--text-dark);
+        }
+
+        .form-content p a {
+            color: var(--primary-gold);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .form-content p a:hover {
+            text-decoration: underline;
+        }
+
+        /* ───── فیلدهای ورودی ───── */
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--input-border);
+            border-radius: 5px;
+            background-color: var(--input-background);
+            font-family: 'Vazir', sans-serif;
+            font-size: 1em;
+            color: var(--text-dark);
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            color: var(--input-border);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            background-color: var(--input-background);
+            padding: 0 5px;
+            font-size: 0.95em;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-gold);
+        }
+
+        .input-group input:focus + label,
+        .input-group input:valid + label,
+        .input-group input:not(:placeholder-shown) + label {
+            top: -10px;
+            font-size: 0.75em;
+            color: var(--primary-gold);
+            background-color: white;
+        }
+
+        .input-group input:not(:placeholder-shown):not(:focus) + label {
+            color: var(--text-dark);
+        }
+
+        /* ───── دکمه ───── */
+        button[type="submit"] {
+            width: 100%;
+            padding: 14px 20px;
+            background-color: var(--primary-gold);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 5px;
+            font-family: 'Vazir', sans-serif;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        /* ───── دسکتاپ ───── */
+        @media (min-width: 768px) {
+
+
+            .container {
+                flex-direction: row;
+                max-width: 1200px;
+                min-height: unset;
+                height: 650px;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+            }
+
+            .image-section {
+                flex: 1;
+                min-height: unset;
+                border-radius: 0 8px 8px 0;
+            }
+
+            .logo-wrapper .logo {
+                max-width: 250px;
+            }
+
+            .form-section {
+                flex: 1;
+                align-items: center;
+                padding: 40px 20px;
+                border-radius: 8px 0 0 8px;
+            }
+
+            .form-content {
+                max-width: 450px;
+            }
+
+            .form-content h2 {
+                font-size: 2.2em;
+                margin-bottom: 15px;
+            }
+
+            .form-content p {
+                font-size: 1em;
+                margin-bottom: 25px;
+            }
+
+            .logo-form {
+                max-width: 120px;
+            }
+
+            .input-group {
+                margin-bottom: 20px;
+            }
+
+            button[type="submit"] {
+                font-size: 1.2em;
+            }
+        }
+
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1400px;
+            }
+        }

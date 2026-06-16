@@ -1,0 +1,52 @@
+{% extends '_base.html' %}
+
+{% load static %}
+{% block title %}Register {% endblock %}
+
+{% block css %}
+      <link rel="stylesheet" href="{% static 'account/register/style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-content">
+    <div class="container">
+
+        <section class="image-section">
+            <div class="logo-wrapper">
+                <img src="negin.png" alt="لوگوی نگین‌بین" class="logo">
+            </div>
+        </section>
+
+        <section class="form-section">
+            <div class="form-content">
+                <h2>Sing Up in Neginbin</h2>
+                <p>Do you have an account? <a href="{% url 'Account:Login' %}">Login</a></p>
+
+                <form id="registerForm" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" id="username" name="username" required placeholder=" ">
+                        <label for="username">User name</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="email" name="email" required placeholder=" ">
+                        <label for="email">Email address </label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" required placeholder=" ">
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="repassword" name="repassword" required placeholder=" ">
+                        <label for="repassword">retype password</label>
+                    </div>
+                    <button type="submit" >Register</button>
+                </form>
+            </div>
+        </section>
+
+    </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,466 @@
+/* Google Fonts: Vazirmatn (یک فونت فارسی زیبا) */
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+
+:root {
+    /* تغییر رنگ‌ها برای تم زرد/طلایی */
+    --primary-color: #8B4513; /* قهوه‌ای گندمی تیره (برای پس‌زمینه) */
+    --secondary-color: #FFC107; /* زرد طلایی روشن (برای دکمه‌ها و فوکوس) */
+    --accent-color: #D4A017; /* طلایی مایل به قهوه‌ای (برای هایلایت‌ها) */
+    --background-color-light: #FFF8E1; /* کرم روشن / بژ */
+    --background-color-dark: #263238; /* خاکستری تیره (برای متن در پس‌زمینه تیره) */
+    --text-color-light: #eceff1; /* متن روشن */
+    --text-color-dark: #37474F; /* متن تیره / قهوه‌ای */
+    --input-border-color: #A1887F; /* رنگ مرزی فیلد ورودی (قهوه‌ای ملایم) */
+    --button-hover-bg: #E6AD0B; /* رنگ پس‌زمینه دکمه هنگام هاور (طلایی تیره‌تر) */
+
+    --shadow-color: rgba(0, 0, 0, 0.15); /* سایه کمی تیره‌تر */
+    --gradient-overlay: linear-gradient(to top, rgba(38, 50, 56, 0.8), rgba(38, 50, 56, 0)); /* گرادیان تیره */
+}
+
+body {
+    font-family: 'Vazirmatn', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color-light); /* پس‌زمینه کرم */
+    color: var(--text-color-dark); /* متن قهوه‌ای تیره */
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+.page-content{
+    min-height:calc(100vh - 56px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+/* افکت پس‌زمینه ذرات طلایی/کرمی */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, rgba(255, 193, 7, 0.1) 1px, transparent 1px),
+                radial-gradient(circle, rgba(212, 160, 23, 0.08) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+
+.login-container {
+    display: flex;
+    background-color: #FFFDE7; /* کرم روشن‌تر برای کانتینر */
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+/* بخش تصویر */
+.login-image-section {
+    flex: 1;
+    position: relative;
+    background-color: var(--primary-color); /* قهوه‌ای گندمی */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 15px 15px 0;
+    color: white;
+    overflow: hidden;
+}
+
+.login-image-section img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    opacity: 0.8;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-overlay); /* گرادیان تیره */
+    z-index: 1;
+}
+
+.app-info {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    z-index: 2;
+    text-align: left;
+}
+
+.app-info h1 {
+    font-size: 2.5em;
+    margin: 0;
+    color: white; /* متن سفید روی پس‌زمینه تیره */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.app-info p {
+    font-size: 1.1em;
+    margin-top: 5px;
+    color: var(--text-color-light); /* متن روشن */
+    opacity: 0.9;
+}
+
+
+/* بخش فرم */
+.login-form-section {
+    flex: 1;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #FFFDE7; /* کرم */
+    border-radius: 15px 0 0 15px;
+}
+
+.form-content {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.logo {
+    width: 100px;
+    margin-bottom: 20px;
+    /* اگر لوگوی شما رنگی است، شاید نیاز به تنظیمات خاصی نداشته باشد */
+    /* اگر لوگوی شما monochrome است، می‌توانید رنگ آن را با filter تغییر دهید */
+    /* filter: invert(1) sepia(1) saturate(5) hue-rotate(10deg); */
+}
+
+.login-form-section h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: var(--text-color-dark); /* متن قهوه‌ای */
+}
+
+.subtitle {
+    font-size: 1em;
+    color: #8c6f44; /* رنگ قهوه‌ای ملایم */
+    margin-bottom: 30px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+    text-align: right;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--input-border-color); /* مرزی قهوه‌ای */
+    border-radius: 8px;
+    font-size: 1em;
+    background-color: #FFF9E7; /* کرم بسیار روشن */
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    border-color: var(--secondary-color); /* زرد طلایی */
+    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.3); /* سایه زرد */
+}
+
+.input-group label {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #FFF9E7; /* همرنگ فیلد */
+    padding: 0 5px;
+    color: var(--input-border-color); /* رنگ مرزی */
+    font-size: 0.9em;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    transform-origin: right top;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -10px;
+    right: 10px;
+    font-size: 0.75em;
+    color: var(--accent-color); /* طلایی */
+    background-color: #FFFDE7; /* کرم */
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 0.9em;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--secondary-color); /* رنگ تیک طلایی */
+    cursor: pointer;
+}
+
+.checkbox-group label {
+    cursor: pointer;
+    user-select: none;
+}
+
+.forgot-password {
+    color: var(--accent-color); /* طلایی */
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: var(--secondary-color); /* زرد طلایی */
+    color: var(--text-color-dark); /* متن تیره روی دکمه */
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4); /* سایه زرد */
+}
+
+.login-button:hover {
+    background-color: var(--button-hover-bg); /* طلایی تیره‌تر */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(230, 173, 11, 0.5);
+}
+
+.signup-link {
+    margin-top: 30px;
+    font-size: 0.95em;
+    color: #795548; /* قهوه‌ای */
+}
+
+.signup-link a {
+    color: var(--accent-color); /* طلایی */
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+.login-footer {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8em;
+    color: #8c6f44; /* قهوه‌ای ملایم */
+    width: calc(100% - 80px);
+    text-align: center;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        max-width: 400px;
+    }
+    .login-image-section {
+        flex: none;
+        width: 100%;
+        height: 200px;
+        border-radius: 15px 15px 0 0;
+        padding: 20px;
+    }
+    .login-image-section img {
+        max-width: 120px;
+        max-height: 120px;
+        margin-bottom: 10px;
+    }
+     .app-info {
+        bottom: 15px;
+        left: 15px;
+        text-align: center;
+        width: 100%;
+    }
+    .app-info h1 {
+        font-size: 1.8em;
+    }
+    .app-info p {
+        font-size: 0.9em;
+    }
+    .login-form-section {
+        width: 100%;
+        border-radius: 0 0 15px 15px;
+        padding: 30px 20px;
+    }
+     .login-footer {
+        position: static;
+        transform: none;
+        margin-top: 20px;
+        padding-bottom: 10px;
+    }
+}
+
+/* Mobile Responsive */
+
+
+
+@media (max-width: 768px) {
+
+    body{
+        padding:15px;
+        overflow-y:auto;
+    }
+
+    .login-container {
+        flex-direction: column;
+        width: 100%;
+        max-width: 420px;
+        border-radius: 20px;
+        margin: 20px auto;
+    }
+
+    /* بخش تصویر */
+    .login-image-section {
+        width: 100%;
+        height: 180px;
+        border-radius: 20px 20px 0 0;
+        padding: 15px;
+    }
+
+    .login-image-section img {
+        max-width: 110px;
+        max-height: 110px;
+    }
+
+    .app-info {
+        left: 0;
+        right: 0;
+        bottom: 15px;
+        text-align: center;
+        padding: 0 10px;
+    }
+
+    .app-info h1 {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+    }
+
+    .app-info p {
+        font-size: 0.85rem;
+    }
+
+    /* بخش فرم */
+    .login-form-section {
+        width: 100%;
+        padding: 25px 20px;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .form-content {
+        max-width: 100%;
+    }
+
+    .logo {
+        width: 80px;
+        margin-bottom: 15px;
+    }
+
+    .login-form-section h2 {
+        font-size: 1.6rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .input-group {
+        margin-bottom: 18px;
+    }
+
+    .input-group input {
+        padding: 14px;
+        font-size: 16px; /* جلوگیری از زوم آیفون */
+    }
+
+    .input-group label {
+        font-size: 0.85rem;
+    }
+
+    .form-options {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    .forgot-password {
+        align-self: flex-end;
+    }
+
+    .login-button {
+        padding: 14px;
+        font-size: 1rem;
+    }
+
+    .signup-link {
+        font-size: 0.9rem;
+        margin-top: 20px;
+    }
+
+    .login-footer {
+        position: static;
+        transform: none;
+        margin-top: 20px;
+        width: 100%;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 768px){
+
+    .login-image-section{
+        display:none;
+    }
+
+    .login-container{
+        max-width:400px;
+    }
+
+    .login-form-section{
+        border-radius:20px;
+    }
+}
