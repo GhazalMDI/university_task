@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from devices.models import UsageLogModel,DeviceModel, ScreenshotModel,DeviceApplicationModel
 from django.views import View
@@ -9,11 +9,13 @@ from django.db.models import Sum
 # Create your views here.
 class HomeView(View):
     TEMPLATE_NAME = 'home.html'
-
-    from django.db.models import Sum
-    from devices.models import DeviceModel, ScreenshotModel, UsageLogModel
+    login_url = '/account/login/'
 
     def get(self, request):
+        if not request.user.is_authenticated:
+            return redirect('Account:Login')
+
+
         devices = DeviceModel.objects.filter(parent=request.user)
         screenshots = ScreenshotModel.objects.none()
         total_usage = 0
@@ -53,16 +55,17 @@ class DeviceInfoView(View):
 
 
 class BlockAppsView(View):
+    TEMPLATE_NAME = 'lock_screen.html'
     def get(self,request,device_id):
         try:
             device = DeviceModel.objects.get(id=device_id,parent=request.user)
-            blocked = DeviceApplicationModel.objects.filter(
+            all_apps = DeviceApplicationModel.objects.filter(
                 device=device,
-                is_blocked=True
             ).select_related('application')
-            apps = [{"id":b.id,'name':b.application.social_name} for b in blocked]
-            print(apps)
-            return JsonResponse({"apps":apps})
+            ctx = {
+                'all_apps': all_apps
+            }
+            return render(request,self.TEMPLATE_NAME,ctx)
         except DeviceModel.DoesNotExist:
             return JsonResponse({'error': 'not found'}, status=404)
 

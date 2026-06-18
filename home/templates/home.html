@@ -5,7 +5,7 @@
 
 {% block css %}
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'home/css/Homestyle.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -81,7 +81,7 @@
         <i class="ti ti-device-laptop"></i>
         Device
     </button>
-    <button class="nav-item" onclick="setNav(this)" data-section="section-lock">
+    <button class="nav-item"  onclick="goToLock(event)" data-section="section-lock">
         <i class="ti ti-lock"></i>
         Lock
     </button>
@@ -99,31 +99,6 @@
         <button class="tab active" onclick="setTab(this)">search</button>
         <button class="tab" onclick="setTab(this)">Viewed</button>
     </div>
-
-{#    <div class="list">#}
-{#        <div id="section-screenshot" class="nav-section">#}
-{#            <div id="screenshotsList" style="display:flex; flex-wrap:wrap; gap:8px; padding:12px 16px;">#}
-{#        </div>#}
-{#            <div id="section-time" class="nav-section" style="display:none">#}
-{#                <p style="padding:16px;color:#888">زمان استفاده</p>#}
-{#            </div>#}
-{#            <div id="section-mobile" class="nav-section" style="display:none">#}
-{#                 <p style="padding:16px;color:#888">موبایل</p>#}
-{#            </div>#}
-{#            <div id="section-mobile" class="nav-section" style="display:none">#}
-{#                 <p style="padding:16px;color:#888">موبایل</p>#}
-{#            </div>#}
-{##}
-{#              <div id="section-lock" class="nav-section" style="display:none">#}
-{#                    <div id="blockedAppsList" style="padding:12px 16px;"></div>#}
-{##}
-{#            </div>#}
-{##}
-{##}
-{#    </div>#}
-{##}
-{#    </div>#}
-
 <div class="list">
 
     <div id="section-time" class="nav-section" style="display:none">
@@ -182,16 +157,18 @@
     }
 
 
-    function updateDevice(select) {
+function updateDevice(select) {
     const deviceId = select.value;
 
-    fetch(`device/${deviceId}/info/`)
+    fetch(`/device/${deviceId}/info/`)
         .then(res => res.json())
         .then(data => {
+            console.log('data:', data); // ببین چی برمیگرده
+
             const container = document.getElementById('screenshotsList');
             container.innerHTML = '';
 
-            if (data.screenshots.length === 0) {
+            if (!data.screenshots || data.screenshots.length === 0) {
                 container.innerHTML = '<p style="color:#888;font-size:13px">اسکرین‌شاتی وجود ندارد</p>';
                 return;
             }
@@ -208,8 +185,7 @@
                 `;
             });
         })
-
-
+        .catch(err => console.error('Fetch error:', err));
 }
     function loadBlockedApps() {
     const deviceId = document.getElementById('deviceSelect').value;
@@ -234,6 +210,43 @@
             });
         });
 }
+    function goToLock(e) {
+        e.preventDefault();
+        const deviceId = document.getElementById('deviceSelect').value;
+        window.location.href = `/device/${deviceId}/blocked-apps/`;
+    }
+
+    async function setStatus(button, isBlocked) {
+
+    const container = button.closest('.protection-controls');
+    const appId = container.dataset.id;
+
+    const response = await fetch('/update-app-status/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({
+            app_id: appId,
+            is_blocked: isBlocked
+        })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+
+        container.querySelectorAll('.toggle-button')
+            .forEach(btn => btn.classList.remove('active'));
+
+        button.classList.add('active');
+
+    } else {
+        alert('خطا در ذخیره‌سازی');
+    }
+}
+
 
     </script>
 {% endblock %}

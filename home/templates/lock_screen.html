@@ -1,0 +1,89 @@
+{% extends '_base.html' %}
+
+{% load static %}
+{% block title %} Lock Screen {% endblock %}
+
+{% block css %}
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+      <link rel="stylesheet" href="{% static 'home/css/Lockstyle.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="phone">
+
+    <div class="header-1">
+        <div class="header-top">
+            <button class="icon-btn" aria-label="back">
+                <i class="ti ti-arrow-right"></i>
+            </button>
+            <span class="header-title">Social Media Protection</span>
+            <span style="width:32px"></span>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <div class="toggle-section">
+            <span class="toggle-label">Block All Social Media Apps</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="toggle-section">
+            <span class="toggle-label">Block Unsupported Social Media</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="info-section">
+            <div class="info-icon">!</div>
+            <p>Help Me Understand This Feature</p>
+        </div>
+
+        <hr class="separator">
+
+        <div class="app-list-header">
+            <h2>Social Media Apps</h2>
+            <div class="how-it-works-container">
+                <i class="ti ti-help-circle" style="font-size:14px;color:#888"></i>
+                <p class="how-it-works">How it works?</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="app-list">
+{% for i in all_apps %}
+        <div class="app-item">
+            <div class="app-icon" style="background:#378ADD"></div>
+            <span class="app-name">{{ i.application.social_name }}</span>
+            <div class="protection-controls">
+                <button class="toggle-button allow active" onclick="setStatus(this)">allow</button>
+                <button class="toggle-button block" onclick="setStatus(this)">block</button>
+            </div>
+        </div>
+{% endfor %}
+
+
+
+
+    </div>
+
+</div>
+ {% endblock %}
+
+{% block js %}
+<script>
+    function setStatus(btn) {
+        const row = btn.parentElement;
+        const buttons = row.querySelectorAll('.toggle-button');
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+</script>
+{% endblock %}
+
