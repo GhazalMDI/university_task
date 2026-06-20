@@ -11,6 +11,7 @@
 {% block content %}
 <div class="phone">
     <!-- هدر -->
+{% if devices %}
     <div class="header-1">
         <div class="header-top">
             <button class="icon-btn" aria-label="back">
@@ -57,7 +58,6 @@
             cursor: pointer;
             outline: none;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23FFC107' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: left 10px center;
         ">
@@ -73,55 +73,69 @@
 
     <!-- نوار ناوبری -->
     <div class="nav-bar">
-    <button class="nav-item" onclick="setNav(this)" data-section="section-time">
-        <i class="ti ti-clock"></i>
-        Time
-    </button>
-    <button class="nav-item" onclick="setNav(this)" data-section="section-device">
-        <i class="ti ti-device-laptop"></i>
-        Device
-    </button>
-    <button class="nav-item"  onclick="goToLock(event)" data-section="section-lock">
-        <i class="ti ti-lock"></i>
-        Lock
-    </button>
-    <button class="nav-item active" onclick="setNav(this)" data-section="section-screenshot">
-        <i class="ti ti-screenshot"></i>
-        Screenshot
-    </button>
-    <button class="nav-item" onclick="setNav(this)" data-section="section-mobile">
-        <i class="ti ti-device-mobile"></i>
-        Mobile
-    </button>
-</div>
+        <button class="nav-item" onclick="goToScreenTime()"  data-section="section-time">
+            <i class="ti ti-clock"></i>
+            Time
+        </button>
+        <button class="nav-item" onclick="setNav(this)" data-section="section-device">
+            <i class="ti ti-device-laptop"></i>
+            Device
+        </button>
+        <button class="nav-item"  onclick="goToLock(event)" data-section="section-lock">
+            <i class="ti ti-lock"></i>
+            Lock
+        </button>
+        <button class="nav-item active" onclick="setNav(this)" data-section="section-screenshot">
+            <i class="ti ti-screenshot"></i>
+            Screenshot
+        </button>
+        <button class="nav-item" onclick="setNav(this)" data-section="section-mobile">
+            <i class="ti ti-device-mobile"></i>
+            Mobile
+        </button>
+    </div>
 
     <div class="tabs">
         <button class="tab active" onclick="setTab(this)">search</button>
         <button class="tab" onclick="setTab(this)">Viewed</button>
     </div>
-<div class="list">
+        <div class="list">
 
-    <div id="section-time" class="nav-section" style="display:none">
-        <p style="padding:16px;color:#888">زمان استفاده</p>
+            <div id="section-time" class="nav-section" style="display:none">
+                <p style="padding:16px;color:#888">زمان استفاده</p>
+            </div>
+
+            <div id="section-device" class="nav-section" style="display:none">
+                <div id="deviceInfoBox" style="padding:16px;color:#212529">
+                        <p style="color:#888">Loading...</p>
+                </div>
+            </div>
+
+            <div id="section-lock" class="nav-section" style="display:none">
+                <div id="blockedAppsList" style="padding:12px 16px;"></div>
+            </div>
+
+            <div id="section-screenshot" class="nav-section">
+                <div id="screenshotsList" style="display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;"></div>
+            </div>
+
+            <div id="section-mobile" class="nav-section" style="display:none">
+                <p style="padding:16px;color:#888">موبایل</p>
+            </div>
     </div>
-
-    <div id="section-device" class="nav-section" style="display:none">
-        <p style="padding:16px;color:#888">اطلاعات دستگاه</p>
+    {% else %}
+    <div style="background:#f5f5f5;border-radius:12px;padding:36px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;margin:16px">
+    <div style="width:56px;height:56px;border-radius:50%;background:#e8e8e8;display:flex;align-items:center;justify-content:center;margin-bottom:14px">
+        <i class="ti ti-device-mobile-off" style="font-size:26px;color:#888"></i>
     </div>
-
-    <div id="section-lock" class="nav-section" style="display:none">
-        <div id="blockedAppsList" style="padding:12px 16px;"></div>
-    </div>
-
-    <div id="section-screenshot" class="nav-section">
-        <div id="screenshotsList" style="display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;"></div>
-    </div>
-
-    <div id="section-mobile" class="nav-section" style="display:none">
-        <p style="padding:16px;color:#888">موبایل</p>
-    </div>
-
+    <p style="font-size:15px;font-weight:500;color:#212529;margin:0 0 6px">Any device not found</p>
+    <p style="font-size:13px;color:#888;margin:0 0 20px;line-height:1.6">No application has been registered for this device</p>
+    <button  style="display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #ddd;border-radius:8px;padding:8px 16px;font-size:13px;cursor:pointer;color:#212529">
+        <i class="ti ti-arrow-right" style="font-size:16px"></i>
+        Please contact with support teams
+    </button>
 </div>
+{% endif %}
 
 </div>
 
@@ -158,58 +172,77 @@
 
 
 function updateDevice(select) {
-    const deviceId = select.value;
+
+ const deviceId = select.value;
 
     fetch(`/device/${deviceId}/info/`)
         .then(res => res.json())
         .then(data => {
-            console.log('data:', data); // ببین چی برمیگرده
-
             const container = document.getElementById('screenshotsList');
             container.innerHTML = '';
 
             if (!data.screenshots || data.screenshots.length === 0) {
-                container.innerHTML = '<p style="color:#888;font-size:13px">اسکرین‌شاتی وجود ندارد</p>';
-                return;
+                container.innerHTML = '<p style="color:#888;font-size:13px">not found scressnshot</p>';
+            } else {
+                data.screenshots.forEach(s => {
+                    container.innerHTML += `
+                        <div style="width:80px">
+                            <img src="/media/${s.image}"
+                                 style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:1.5px solid #e0e0e0">
+                            <p style="font-size:10px;color:#888;margin-top:4px;text-align:center">
+                                ${new Date(s.taken_at).toLocaleDateString('fa-IR')}
+                            </p>
+                        </div>
+                    `;
+                });
             }
 
-            data.screenshots.forEach(s => {
-                container.innerHTML += `
-                    <div style="width:80px">
-                        <img src="/media/${s.image}"
-                             style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:1.5px solid #e0e0e0">
-                        <p style="font-size:10px;color:#888;margin-top:4px;text-align:center">
-                            ${new Date(s.taken_at).toLocaleDateString('fa-IR')}
-                        </p>
+            const info = data.device_information;
+            document.getElementById('deviceInfoBox').innerHTML = `
+                <div style="display:flex;flex-direction:column;gap:10px">
+                    <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid #f0f0f0;padding-bottom:8px">
+                        <span style="color:#888;font-size:13px">Device Name</span>
+                        <span style="font-size:13px;font-weight:500">${info.device_name}</span>
                     </div>
-                `;
-            });
+                    <div style="display:flex;justify-content:space-between">
+                        <span style="color:#888;font-size:13px">Mac Adresss</span>
+                        <span style="font-size:13px;font-weight:500;direction:ltr">${info.mac_address}</span>
+                    </div>
+                </div>
+            `;
         })
         .catch(err => console.error('Fetch error:', err));
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const select = document.getElementById('deviceSelect');
+    if (select) {
+        updateDevice(select);
+    }
+});
     function loadBlockedApps() {
-    const deviceId = document.getElementById('deviceSelect').value;
-    fetch(`/device/${deviceId}/blocked-apps/`)
-        .then(res => res.json())
-        .then(data => {
-            const container = document.getElementById('blockedAppsList');
-            container.innerHTML = '';
-            if (data.apps.length === 0) {
-                container.innerHTML = '<p style="color:#888;font-size:13px">هیچ برنامه‌ای قفل نشده</p>';
-                return;
-            }
-            data.apps.forEach(app => {
-                container.innerHTML += `
-                    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:0.5px solid #f0f0f0">
-                        <div style="width:36px;height:36px;background:#ffecec;border-radius:8px;display:flex;align-items:center;justify-content:center">
-                            <i class="ti ti-lock" style="color:#ff6b6b;font-size:18px"></i>
+        const deviceId = document.getElementById('deviceSelect').value;
+        fetch(`/device/${deviceId}/blocked-apps/`)
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('blockedAppsList');
+                container.innerHTML = '';
+                if (data.apps.length === 0) {
+                    container.innerHTML = '<p style="color:#888;font-size:13px">هیچ برنامه‌ای قفل نشده</p>';
+                    return;
+                }
+                data.apps.forEach(app => {
+                    container.innerHTML += `
+                        <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:0.5px solid #f0f0f0">
+                            <div style="width:36px;height:36px;background:#ffecec;border-radius:8px;display:flex;align-items:center;justify-content:center">
+                                <i class="ti ti-lock" style="color:#ff6b6b;font-size:18px"></i>
+                            </div>
+                            <span style="font-size:14px">${app.name}</span>
                         </div>
-                        <span style="font-size:14px">${app.name}</span>
-                    </div>
-                `;
+                    `;
+                });
             });
-        });
-}
+    }
     function goToLock(e) {
         e.preventDefault();
         const deviceId = document.getElementById('deviceSelect').value;
@@ -247,6 +280,10 @@ function updateDevice(select) {
     }
 }
 
+    function goToScreenTime() {
+    const deviceId = document.getElementById('deviceSelect').value;
+    window.location.href = `/app/${deviceId}/screen-time`;
+    }
 
     </script>
 {% endblock %}

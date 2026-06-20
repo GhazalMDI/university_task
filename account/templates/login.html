@@ -12,12 +12,9 @@
       <div class="login-container">
         <div class="login-image-section">
             <!-- می‌توانید یک تصویر یا گرافیک جذاب مرتبط با Negin Bin اینجا قرار دهید -->
-            <img src="negin.png" alt="Negin Bin Graphic">
+            <img src="{% static 'account/login/media/negin.png' %}" alt="Negin Bin Graphic">
             <div class="image-overlay"></div>
-            <div class="app-info">
-                <h1>نگین بین</h1>
-                <p>دنیای هوشمند در دستان شما</p>
-            </div>
+
         </div>
         <div class="login-form-section">
             <div class="form-content">
@@ -28,20 +25,20 @@
                 <form id="login-form" method="POST">
                     {% csrf_token %}
                     <div class="input-group">
-                        <input type="text" id="username_email" name="username_email" placeholder="نام کاربری/ایمیل" required>
+                        <input type="text" id="username_email" name="username_email" placeholder="" required>
                         <label for="username_email">Email/Password</label>
                     </div>
                     <div class="input-group">
-                        <input type="password" id="password" name="password" placeholder="رمز عبور" required>
+                        <input type="password" id="password" name="password" placeholder="" required>
                         <label for="password">Password</label>
                     </div>
 
                     <div class="form-options">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="remember-me">
-                            <label for="remember-me">Remember me.</label>
-                        </div>
-                        <a href="#" class="forgot-password">are you forget paswword? </a>
+{#                        <div class="checkbox-group">#}
+{#                            <input type="checkbox" id="remember-me">#}
+{#                            <label for="remember-me">Remember me.</label>#}
+{#                        </div>#}
+                        <a href="#" class="forgot-password">? are you forget password </a>
                     </div>
 
                     <button href="" type="submit" class="login-button">Login</button>
@@ -52,7 +49,7 @@
                 </div>
             </div>
              <footer class="login-footer">
-                <p>&copy; 2026 نگین بین. تمامی حقوق محفوظ است.</p>
+                <p>&copy;2026 Negin Bin All rights reserved.</p>
             </footer>
         </div>
     </div>

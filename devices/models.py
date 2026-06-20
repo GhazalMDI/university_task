@@ -40,3 +40,25 @@ class ScreenshotModel(models.Model):
 
     def __str__(self):
         return f"{self.device_application} - {self.taken_at}"
+
+
+class DailyLimitModel(models.Model):
+    DAYS_OF_WEEK = [
+        (0, 'Saturday'),
+        (1, 'Sunday'),
+        (2, 'Monday'),
+        (3, 'Tuesday'),
+        (4, 'Wednesday'),
+        (5, 'Thursday'),
+        (6, 'Friday'),
+    ]
+    device = models.ForeignKey(DeviceModel,on_delete=models.CASCADE,related_name='daily_limits')
+    day_of_week = models.IntegerField(choices=DAYS_OF_WEEK)
+    limit_minutes = models.IntegerField(default=0)
+    is_unlimited = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ['device','day_of_week']
+
+    def __str__(self):
+        return f"{self.device.device_name} - {self.get_day_of_week_display()}"

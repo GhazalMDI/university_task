@@ -1,0 +1,114 @@
+{% extends '_base.html' %}
+
+{% load static %}
+{% block title %} Time Management {% endblock %}
+{% block css %}
+          <link rel="stylesheet" href="{% static 'home/css/time_management.css' %}">
+{% endblock %}
+{% block content %}
+<div class="phone">
+
+    <div class="header-1">
+        <div class="header-top">
+            <button class="icon-btn" aria-label="back" onclick="window.history.back()">
+                <i class="ti ti-arrow-right"></i>
+            </button>
+            <span class="header-title">Screen Time Management</span>
+            <span style="width:32px"></span>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <p class="section-label">Daily Allocation</p>
+
+      <div class="days-row" id="daysRow">
+    {% for day in daily_limits %}
+    <div class="day-item" data-day="{{ day.day_of_week }}">
+        <span class="day-name">{{ day.get_day_of_week_display|slice:":3"|upper }}</span>
+        <span class="day-value">
+            {% if day.is_unlimited %}Unltd{% else %}{{ day.limit_minutes }}m{% endif %}
+        </span>
+    </div>
+    {% endfor %}
+</div>
+
+        <hr class="divider">
+
+        <div class="option-row">
+            <span class="option-label">When screen time runs out</span>
+            <span class="option-value">No Internet</span>
+        </div>
+
+        <hr class="divider">
+
+        <div class="screen-time-today">
+            <p class="today-label">Screen Time Today</p>
+
+            <div class="time-stats">
+                <div class="time-block">
+                    <span class="stat-label">Used</span>
+                    <span class="stat-value" id="used-time">{{ used_today }} min</span>
+                </div>
+                <div class="time-block">
+                    <span class="stat-label">Left</span>
+                    <span class="stat-value" id="left-time">{{ left_today }} min</span>
+                </div>
+            </div>
+
+            <p class="adjust-label">adjust available for today</p>
+
+            <div class="adjust-buttons">
+                <button class="circle-btn" id="decrease-btn" onclick="adjustTime(-30)" aria-label="decrease 30 minutes">
+                    <i class="ti ti-minus"></i>
+                </button>
+                <button class="circle-btn" id="increase-btn" onclick="adjustTime(30)" aria-label="increase 30 minutes">
+                    <i class="ti ti-plus"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+    const deviceId = {{ device_id }};
+    const todayDayOfWeek = {{ today_custom_day }};
+
+
+    function adjustTime(delta) {
+        fetch(`/device/${deviceId}/screen-time/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify({ delta: delta,day_of_week: todayDayOfWeek })
+        })
+        .then(res => res.json())
+        .then(data => location.reload());
+    }
+
+
+    function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,208 @@
+@font-face {
+            font-family: 'Vazir';
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Vazir', sans-serif;
+            background-color: #fff;
+        }
+
+        .phone {
+            width: 100%;
+            background: #fff;
+        }
+
+        /* ═══════════ Header ═══════════ */
+        .header-1 {
+            background: #8B4513;
+            padding: 18px 18px 20px;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: #FFC107;
+            font-size: 17px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .header-title {
+            flex: 1;
+            text-align: center;
+            color: #FFC107;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* ═══════════ Content ═══════════ */
+        .content {
+            padding: 24px 18px;
+        }
+
+        .section-label {
+            color: #8B4513;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .days-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 4px;
+        }
+
+        .day-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .day-item .day-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: #212529;
+        }
+
+        .day-item .day-value {
+            font-size: 11px;
+            color: #aaa;
+        }
+
+        .day-item.today .day-name {
+            color: #8B4513;
+        }
+
+        .day-item.today .day-value {
+            color: #FFC107;
+            font-weight: 500;
+        }
+
+        /* Divider */
+        .divider {
+            border: none;
+            border-top: 0.5px solid #f0f0f0;
+            margin: 16px 0;
+        }
+
+        /* Screen time runs out row */
+        .option-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+        }
+
+        .option-row .option-label {
+            font-size: 14px;
+            color: #212529;
+        }
+
+        .option-row .option-value {
+            font-size: 13px;
+            color: #888;
+        }
+
+        /* Screen Time Today */
+        .screen-time-today {
+            text-align: center;
+            margin-top: 26px;
+        }
+
+        .screen-time-today .today-label {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+        }
+
+        .time-stats {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .time-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .time-block .stat-label {
+            font-size: 11px;
+            color: #aaa;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .time-block .stat-value {
+            font-size: 1.9rem;
+            font-weight: 500;
+            color: #FFC107;
+            letter-spacing: -1px;
+        }
+
+        /* Adjust available */
+        .adjust-label {
+            text-align: center;
+            font-size: 13px;
+            color: #bbb;
+            margin-top: 18px;
+            margin-bottom: 32px;
+        }
+
+        /* Buttons */
+        .adjust-buttons {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .circle-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 1.5px solid #e0e0e0;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 22px;
+            color: #888;
+        }
+
+        .circle-btn:hover {
+            border-color: #FFC107;
+            color: #8B4513;
+            background: rgba(255,193,7,0.08);
+        }
+
+        .circle-btn:active {
+            transform: scale(0.95);
+        }
