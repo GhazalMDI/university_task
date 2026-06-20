@@ -20,13 +20,13 @@
             <span style="width:32px"></span>
         </div>
     </div>
-
+{% if all_apps %}
     <div class="content">
 
         <div class="toggle-section">
             <span class="toggle-label">Block All Social Media Apps</span>
             <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" onchange="toggleBlockAll(this)"  {% if all_blocked %}checked{% endif %}>
                 <span class="slider"></span>
             </label>
         </div>
@@ -55,18 +55,33 @@
         </div>
 
     </div>
-
     <div class="app-list">
 {% for i in all_apps %}
         <div class="app-item">
             <div class="app-icon" style="background:#378ADD"></div>
             <span class="app-name">{{ i.application.social_name }}</span>
             <div class="protection-controls">
-                <button class="toggle-button allow active" onclick="setStatus(this)">allow</button>
-                <button class="toggle-button block" onclick="setStatus(this)">block</button>
+                 <button class="toggle-button allow {% if not i.is_blocked %}active{% endif %}"
+                    onclick="setStatus(this, {{ i.id }}, false)">allow</button>
+            <button class="toggle-button block {% if i.is_blocked %}active{% endif %}"
+                    onclick="setStatus(this, {{ i.id }}, true)">block</button>
             </div>
         </div>
 {% endfor %}
+
+    {% else %}
+    <div style="background:#f5f5f5;border-radius:12px;padding:36px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;margin:16px">
+    <div style="width:56px;height:56px;border-radius:50%;background:#e8e8e8;display:flex;align-items:center;justify-content:center;margin-bottom:14px">
+        <i class="ti ti-device-mobile-off" style="font-size:26px;color:#888"></i>
+    </div>
+    <p style="font-size:15px;font-weight:500;color:#212529;margin:0 0 6px">Record not found</p>
+    <p style="font-size:13px;color:#888;margin:0 0 20px;line-height:1.6">No application has been registered for this device</p>
+    <button onclick="window.history.back()" style="display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #ddd;border-radius:8px;padding:8px 16px;font-size:13px;cursor:pointer;color:#212529">
+        <i class="ti ti-arrow-right" style="font-size:16px"></i>
+        Back to previous page
+    </button>
+</div>
+    {% endif %}
 
 
 
@@ -78,12 +93,63 @@
 
 {% block js %}
 <script>
+    const device_id = {{ device_id }}
     function setStatus(btn) {
         const row = btn.parentElement;
         const buttons = row.querySelectorAll('.toggle-button');
         buttons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
     }
+
+
+    function toggleBlockAll(checkbox){
+       fetch(`/device/${device_id}/blocked-apps/`,{
+           method:'POST',
+           headers:{
+                 'Content-Type': 'application/json',
+                 'X-CSRFToken': getCookie('csrftoken'),
+           },
+           body:JSON.stringify({is_blocked:checkbox.checked})
+           }).then(res=>res.json())
+            .then(data=>{
+                if(data.success) location.reload();
+            })
+    }
+
+    function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+    function setStatus(btn, appId, isBlocked) {
+    const row = btn.parentElement;
+    const buttons = row.querySelectorAll('.toggle-button');
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    fetch(`/app/${appId}/toggle/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),
+        },
+        body: JSON.stringify({ is_blocked: isBlocked })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (!data.success) console.error('Failed to update');
+    });
+}
 </script>
 {% endblock %}
 
